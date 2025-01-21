@@ -16,7 +16,7 @@
       enabled: yes
   
   - name: connect to mysql server
-    ansible.mysql.mysql_info:
+    community.mysql.mysql_info:
       login_user: root
       login_host: mysql.learndevopsacademy.online
       login_password: "{{ mysql_root_password }}"
