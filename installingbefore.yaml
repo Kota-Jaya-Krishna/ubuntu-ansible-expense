@@ -2,16 +2,14 @@
   hosts: mysql
   become: yes
   tasks:
-  - name: Install Python 3.9 and dependencies
-    apt:
-      name:
-        - python3.9
-        - python3.9-distutils
-        - python3.9-venv
-      state: present
+- name: Create a virtual environment
+  command:
+    cmd: python3 -m venv /path/to/your/venv
+    creates: /path/to/your/venv/bin/activate
+    
+- name: Activate virtual environment and install dependencies
+  shell: |
+    source /path/to/your/venv/bin/activate
+    pip install cryptography PyMySQL
 
-  - name: Install pip for Python 3.9
-    command: curl -sS https://bootstrap.pypa.io/get-pip.py | python3.9
 
-  - name: Upgrade pip for Python 3.9
-    command: python3.9 -m pip install --upgrade pip
