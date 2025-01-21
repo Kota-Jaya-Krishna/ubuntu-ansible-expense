@@ -20,4 +20,13 @@
   - name: Execute SQL query
     ansible.builtin.shell:
       cmd: mysql -e "use mysql; SELECT User,Host FROM user;"
+    register: query_result
+
+  - name: Format query result
+    ansible.builtin.copy:
+      content: |
+          Query Results:
+          
+          {{ query_result.stdout | regex_replace('\t', '  ') }}
+      dest: /tmp/query_results-1.txt
 
