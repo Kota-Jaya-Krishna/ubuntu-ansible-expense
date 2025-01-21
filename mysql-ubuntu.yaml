@@ -7,7 +7,7 @@
   - name: install MYSQL libraries
     ansible.builtin.pip:
       name: "{{ item }}"
-      executable: pip 24.0
+      executable: pip3
     loop:
     - cryptography
     - PyMySQL
