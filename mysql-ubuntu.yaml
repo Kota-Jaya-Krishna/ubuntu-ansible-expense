@@ -19,8 +19,14 @@
 
   - name: Execute SQL query
     ansible.builtin.shell:
-      cmd: mysql -e "use mysql; SELECT User,Host FROM user;"
+      cmd: mysql -e "CREATE USER 'root'@'%' IDENTIFIED BY 'Harini@2024';GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' WITH GRANT OPTION;FLUSH PRIVILEGES;"
     register: query_result
+
+  - name: Execute SQL query
+    ansible.builtin.shell:
+      cmd: mysql -e "use mysql;select User,Host from user;"
+    register: query_result
+
 
   - name: Format query result
     ansible.builtin.copy:
