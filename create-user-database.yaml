@@ -1,0 +1,17 @@
+- name: database execution query
+  hosts: db
+  become: yes
+  tasks: 
+  - name: install MYSQL libraries
+    ansible.builtin.pip:
+      name: "{{ item }}"
+      executable: pip24.0
+    loop:
+    - cryptography
+    - PyMySQL
+
+  - name: Insert Record in database
+    community.mysql.mysql_query:
+      login_host: mysql.learndevopsacademy.online
+      login_user: root
+      query: CREATE USER 'root'@'%' IDENTIFIED BY 'Harini@2024'
