@@ -8,14 +8,6 @@
     ansible.builtin.package:
       name: python3-pip
       state: present
-
-  - name: install MYSQL libraries
-    ansible.builtin.pip:
-      name: "{{ item }}"
-      executable: pip 24.0
-    loop:
-    - cryptography
-    - PyMySQL
        
   - name: install mysql
     ansible.builtin.package:
