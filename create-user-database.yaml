@@ -2,6 +2,18 @@
   hosts: mysql
   become: yes
   tasks: 
+  - name: Install Python 3.9 and pip
+    ansible.builtin.package:
+      name: "{{ item }}"
+    loop:
+      - python3.9
+      - python3.9-distutils
+      - python3.9-venv
+    state: present
+
+  - name: Install pip3.9
+    ansible.builtin.command: curl -sS https://bootstrap.pypa.io/get-pip.py | python3.9
+
   - name: install MYSQL libraries
     ansible.builtin.pip:
       name: "{{ item }}"
