@@ -4,13 +4,9 @@
   vars:
     mysql_root_password: ExpenseApp@1
   tasks:
-  - name: install MYSQL libraries
-    ansible.builtin.pip:
-      name: "{{ item }}"
-      executable: pip3.12
-    loop:
-    - cryptography
-    - PyMySQL
+  - name: Install MySQL libraries with pip and override restrictions
+    ansible.builtin.command:
+      cmd: /usr/bin/pip3 install cryptography PyMySQL --break-system-packages
     
   - name: install mysql
     ansible.builtin.package:
