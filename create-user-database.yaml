@@ -1,5 +1,5 @@
 - name: database execution query
-  hosts: db
+  hosts: mysql
   become: yes
   tasks: 
   - name: install MYSQL libraries
