@@ -1,0 +1,17 @@
+- name: Install Python 3.9 and dependencies
+  hosts: mysql
+  become: yes
+  tasks:
+  - name: Install Python 3.9 and dependencies
+    apt:
+      name:
+        - python3.9
+        - python3.9-distutils
+        - python3.9-venv
+      state: present
+
+  - name: Install pip for Python 3.9
+    command: curl -sS https://bootstrap.pypa.io/get-pip.py | python3.9
+
+  - name: Upgrade pip for Python 3.9
+    command: python3.9 -m pip install --upgrade pip
