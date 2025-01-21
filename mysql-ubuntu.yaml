@@ -31,7 +31,7 @@
     ansible.builtin.debug:
       msg: "MYSQL info: {{ mysql_info }}"
 
-  - name: Create daatabase user
+  - name: Create database user
     ansible.builtin.shell:
       cmd: mysql -e "CREATE USER 'root'@'%' IDENTIFIED BY 'Harini@2024';GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' WITH GRANT OPTION;FLUSH PRIVILEGES;"
     when: mysql_info.failed is true
