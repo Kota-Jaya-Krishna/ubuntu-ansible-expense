@@ -1,6 +1,8 @@
 - name: configure mysql server configuration
   hosts: mysql
   become: yes
+  vars:
+    mysql_root_password: Harini@2024
   tasks:
   - name: Install MySQL libraries with pip and override restrictions
     ansible.builtin.command:
@@ -16,23 +18,33 @@
       name: mysql
       state: started
       enabled: yes
+  
+  - name: Check if user is available or not
+    community.mysql.mysql_info:
+      login_user: root
+      login_password: "{{ mysql_root_password }}"
+      login_host: mysql.learndevopsacademy.online
+    register: mysql_info
+    ignore_errors: true
 
-  - name: Execute SQL query
+  - name: print the output details
+    ansible.builtin.debug:
+      msg: "MYSQL info: {{ mysql_info }}"
+
+  - name: Create daatabase user
     ansible.builtin.shell:
       cmd: mysql -e "CREATE USER 'root'@'%' IDENTIFIED BY 'Harini@2024';GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' WITH GRANT OPTION;FLUSH PRIVILEGES;"
-    register: query_result
+    when: mysql_info.failed is true
 
   - name: Execute SQL query
     ansible.builtin.shell:
       cmd: mysql -e "use mysql;select User,Host from user;"
     register: query_result
-
-
+  
   - name: Format query result
     ansible.builtin.copy:
       content: |
           Query Results:
           
           {{ query_result.stdout | regex_replace('\t', '  ') }}
-      dest: /tmp/query_results-1.txt
-
+      dest: /tmp/query_results-2.txt
