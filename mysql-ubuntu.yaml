@@ -1,8 +1,6 @@
 - name: configure mysql server configuration
   hosts: mysql
   become: yes
-  vars:
-    mysql_root_password: ExpenseApp@1
   tasks:
   - name: Install MySQL libraries with pip and override restrictions
     ansible.builtin.command:
@@ -18,16 +16,8 @@
       name: mysql
       state: started
       enabled: yes
-  
-  - name: connect to mysql server
-    community.mysql.mysql_info:
-      login_user: root
-      login_host: mysql.learndevopsacademy.online
-      login_password: "{{ mysql_root_password }}"
-    register: mysql_info
-    ignore_errors: true
 
-  - name: print the output details
-    ansible.builtin.debug:
-      msg: "MYSQL info: {{ mysql_info }}"
+  - name: Execute SQL query
+    ansible.builtin.shell:
+      cmd: mysql -e "use mysql; SELECT User,Host FROM user;"
 
