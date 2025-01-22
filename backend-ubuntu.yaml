@@ -1,0 +1,65 @@
+- name: configure backend server
+  hosts: backend
+  become: yes
+  tasks:
+  - name: install pip module in MySQL server
+    ansible.builtin.package:
+      name: python3-pip
+      state: present
+
+  - name: Install MySQL libraries with pip and override restrictions
+    ansible.builtin.command:
+      cmd: /usr/bin/pip3 install cryptography PyMySQL --break-system-packages
+  
+  - name: install nodejs
+    ansible.builtin.package:
+      name: "{{ item }}"
+      state: present
+    loop:
+    - nodejs
+    - mysql-client-core-8.0
+
+  - name: create expense user
+    ansible.builtin.user:
+      name: expense
+
+  - name: create app directory
+    ansible.builtin.file:
+      path: /app
+      state: directory
+  
+  - name: download application code
+    ansible.builtin.get_url:
+      url: https://expense-builds.s3.us-east-1.amazonaws.com/expense-backend-v2.zip
+      dest: /tmp/backend.zip
+
+  - name: unzip the file
+    ansible.builtin.unarchive:
+      src: /tmp/backend.zip
+      dest: /app
+      remote_src: yes
+
+  - name: install dependencies
+    community.general.npm:
+      path: /app
+
+  - name: copy backend service
+    ansible.builtin.copy:
+      src: backend.service
+      dest: /etc/systemd/system/backend.service
+
+  - name: import mysql data
+    community.mysql.mysql_db:
+      state: import
+      name: all
+      login_user: root
+      login_password: Harini@2024
+      login_host: mysql.learndevopsacademy.online
+      target: /app/schema/backend.sql
+
+  - name: deamon reload and restart
+    ansible.builtin.systemd_service:
+      enabled: yes
+      state: restarted
+      daemon_reload: true
+      name: backend
