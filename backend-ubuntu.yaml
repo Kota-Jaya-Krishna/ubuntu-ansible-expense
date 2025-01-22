@@ -11,13 +11,14 @@
     ansible.builtin.command:
       cmd: /usr/bin/pip3 install cryptography PyMySQL --break-system-packages
   
-  - name: install nodejs
+  - name: install nodejs,mysql client,unzip
     ansible.builtin.package:
       name: "{{ item }}"
       state: present
     loop:
     - nodejs
     - mysql-client-core-8.0
+    - unzip
 
   - name: create expense user
     ansible.builtin.user:
