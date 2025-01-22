@@ -8,7 +8,7 @@
       regexp: '^bind-address\s*=\s*.*'
       replace: 'bind-address              =0.0.0.0'
   
-  -name: update mysqlx-bind-address in mysql configuration
+  - name: update mysqlx-bind-address in mysql configuration
     ansible.builtin.replace:
       path: /etc/mysql/mysql.conf.d/mysqld.cnf
       regexp: '^mysqlx-bind-address\s*=\s*.*'
