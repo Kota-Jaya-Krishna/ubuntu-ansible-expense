@@ -1,3 +1,9 @@
+#This YAML file should run only if the servers are UBUNTU. We have to replace the mysqlx-bind-address and bind-address in MYSQL
+#configuration from 127.0.0.1 to 0.0.0.0 so that any one from outside also can able to connect to this database. if we not changed this
+#file it will not work(but in LIVE PRODUCTION this is not recommendable). make sure to run this YAML file only after 
+#"mysql-ubuntu.yaml" file.
+
+
 - name: update MySQL configiration
   hosts: mysql
   become: yes
