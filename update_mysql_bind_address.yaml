@@ -3,7 +3,6 @@
 #file it will not work(but in LIVE PRODUCTION this is not recommendable). make sure to run this YAML file only after 
 #"mysql-ubuntu.yaml" file.
 
-
 - name: update MySQL configiration
   hosts: mysql
   become: yes
