@@ -42,6 +42,12 @@
       dest: /usr/share/nginx/html
       remote_src: yes
 
+  - name: Create a default.d directory if it does not exist
+    ansible.builtin.file:
+      path: /etc/nginx/default.d
+      state: directory
+      mode: '0755'
+
   - name: copy expense config
     ansible.builtin.copy:
       src: expense.conf
