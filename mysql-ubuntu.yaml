@@ -4,6 +4,11 @@
   vars:
     mysql_root_password: Harini@2024
   tasks:
+  - name: install pip module in MySQL server
+    ansible.builtin.package:
+      name: python3-pip
+      stste: present
+      
   - name: Install MySQL libraries with pip and override restrictions
     ansible.builtin.command:
       cmd: /usr/bin/pip3 install cryptography PyMySQL --break-system-packages
