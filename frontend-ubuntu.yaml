@@ -1,3 +1,5 @@
+#BELOW YAML FILE IS WORKING, AFTER EXECUTION OF THIS YAML,PLEASE CHECK THE NOTEPAD++ FOR NEXT STEPS TO PROCEED
+
 - name: configure frontend
   hosts: frontend
   become: yes
